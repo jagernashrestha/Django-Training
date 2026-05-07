@@ -17,10 +17,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from first.views import first_fun,second_fun,contact,about
+from vegu.views import recipe, delete_recipe
+from django.conf.urls.static import static
+from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',first_fun, name = "hello"),
     path('second/',second_fun, name = "success"),
     path('contact/',contact, name = "contact_page"),
     path('about/', about, name = "about_page" ),
+    path('recipe/', recipe, name = "recipe"),
+    path('delete_recipe/<id>/',delete_recipe, name = "delete_recipe")
 ]
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL,
+                              document_root=settings.MEDIA_ROOT)
+
+urlpatterns += staticfiles_urlpatterns()
